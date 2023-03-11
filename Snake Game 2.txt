@@ -1,0 +1,64 @@
+<body>
+<canvas id="canvas" height="400" width="600">
+</canvas>
+<script>
+/*
+X Draw Rect  (Background)
+X  Draw Food
+-  Draw Snake
+-  Event loop (timer)
+-  Move snake
+-  Add actions
+-  Collisions
+*/
+
+function Food( ){
+   this.x  =  3;
+   this.y  =  4;
+   this.draw  =  function(game){
+      game.Rect(this.x,  this.y,  1,  1,  'blue');
+    };
+}
+function Snake( ){
+   this.x  =  10;
+   this.y  =  10;
+   this.trace  =  [ ];
+   this.step  =  function(game){
+      this.trace.push({x:this.x,  y:this.y});
+   };
+   this.draw  =  function(game){   
+          for(var  i=0;   i<this.trace.length,  i++){
+             var pos  =  this.trace[ i ];
+              game.Rect(pos.x,  pos.y,  1, 1,  'white');
+      }
+   };
+}  
+function Game( ){
+
+   this.ctx  =  canvas.getContext('2d');
+   this.scale  =  20;
+   this.nx  =  Math.floor(canvas.width/this.scale);
+   this.my  =  Math.floor(canvas.height/this.scale);
+   
+   this.food  =  new Food( );
+
+   this.Rect  =  function(x,  y,  w,  h,  fs){
+      this.ctx.fillStyle  =  fs;
+      this.ctx.fillRect(x*this.scale,  y*this.scale,  w*this.scale  -  1,  h*this.scale - 1);
+   };
+
+   this.draw  =  function( ){
+       this.Rect(0,0,  this.nx,  this.ny,  '#AAAAAA'); 
+       this.food.draw(this);
+       this.snake.step( );
+       this.snake.draw(this);
+   };
+   this.draw( );
+}
+
+window.onload  =  function( ){
+     new Game( );
+}
+
+</script>
+</body>
